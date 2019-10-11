@@ -1,0 +1,6 @@
+Para nest js Api
+- Database Mongo
+	- npm install --save @nestjs/mongoose mongoose
+- Env
+	- npm i --save dotenv
+	- npm i --save-dev @types/dotenv
