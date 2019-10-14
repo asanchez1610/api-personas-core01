@@ -6,8 +6,8 @@ const configEnv = new ConfigEnvService(`${process.env.MODE_ENV || 'development'}
 
 export const databaseProvider = [
     {
-        provide: ctts.keys.cnxName,
+        provide: ctts.db.cnxName,
         useFactory: async (): Promise<typeof mongoose> =>
-            await mongoose.connect(configEnv.get(ctts.database.url))
+            await mongoose.connect(configEnv.get(ctts.db.url))
     }
 ];

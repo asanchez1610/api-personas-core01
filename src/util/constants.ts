@@ -1,11 +1,15 @@
 export const ctts = {
-    database: {
-        url: 'urldatabase'
+    db: {
+        url: 'URL_MONGO_DB',
+        cnxName:'DATABASE_CONNECTION',
+        models: {
+            persona: {
+                provide: 'PERSONA_MODEL',
+                className: 'Persona'
+            }
+        }
     },
     jwt: {
         secret: ''
-    },
-    keys: {
-        cnxName:'DATABASE_CONNECTION'
     }
 }; 
