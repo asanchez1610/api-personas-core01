@@ -5,7 +5,7 @@ import { PersonaSchema } from '../models.schemas';
 export const PersonaProvider = [
     {
         provide: ctts.db.models.persona.provide,
-        useFactory: (connection: Connection) => connection.model(ctts.db.models.persona.className, PersonaSchema),
+        useFactory: (connection: Connection) => connection.model(ctts.db.models.persona.entityName, PersonaSchema),
         inject: [ctts.db.cnxName],
     }
 ];

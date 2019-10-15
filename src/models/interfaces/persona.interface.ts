@@ -1,6 +1,6 @@
 import { Document } from 'mongoose';
 
-export interface Persona extends Document {
+export interface IPersona extends Document {
      readonly nombres: string;
      readonly apellidos: string;
      readonly telefono: string;

@@ -5,7 +5,7 @@ export const ctts = {
         models: {
             persona: {
                 provide: 'PERSONA_MODEL',
-                className: 'Persona'
+                entityName: 'Persona'
             }
         }
     },

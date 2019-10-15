@@ -1,4 +1,5 @@
 export class PersonaDto {
+    id: string;
     nombres: string;
     apellidos: string;
     telefono: string;
