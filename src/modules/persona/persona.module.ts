@@ -7,6 +7,7 @@ import { PersonaProvider } from '../../models/providers/persona.provider';
 @Module({
     imports: [ DatabaseModule ],
     controllers: [ PersonaController ],
-    providers: [ PersonaService, ...PersonaProvider ]
+    providers: [ PersonaService, ...PersonaProvider ],
+    exports: [PersonaService]
 })
 export class PersonaModule {}

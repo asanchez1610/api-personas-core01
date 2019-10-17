@@ -4,3 +4,10 @@ Para nest js Api
 - Env
 	- npm i --save dotenv
 	- npm i --save-dev @types/dotenv
+- Bcrypt
+	- npm i bcrypt
+- Authentication
+	- npm install --save @nestjs/passport passport passport-local
+	- npm install --save-dev @types/passport-local	
+	- npm install @nestjs/jwt passport-jwt
+	- npm install @types/passport-jwt --save-dev

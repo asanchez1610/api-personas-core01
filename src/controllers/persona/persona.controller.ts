@@ -1,26 +1,29 @@
-import { Controller, Get, Post, Put, Param, Delete, HttpException, HttpStatus } from '@nestjs/common';
+import { Controller, Get, Post, Put, Param, Delete, UseGuards, Body } from '@nestjs/common';
 import { PersonaService } from '../../services/persona/persona.service';
 import { Persona } from '../../decorators/persona.decorators';
 import { PersonaDto } from '../../models/dtos/persona.dto';
+import { AuthGuard } from '@nestjs/passport';
+import { ctts } from '../../util/constants';
 
 @Controller('personas')
+@UseGuards(AuthGuard(ctts.keys.strategyJwtName))
 export class PersonaController {
 
     constructor(private readonly personaService: PersonaService) { }
 
     @Post()
-    async crearPersona(@Persona() persona: PersonaDto) {
+    async crearPersona(@Body() persona: PersonaDto) {
         return await this.personaService.crearPersona(persona);
     }
 
     @Put(':id')
-    async modificarPersona(@Param() params, @Persona() persona: PersonaDto) {
+    async modificarPersona(@Param() params, @Body() persona: PersonaDto) {
         return await this.personaService.modificarPersona(params.id, persona);
     }
 
     @Get()
     async listarPersona(@Persona() persona: PersonaDto) {
-        let personas = await this.personaService.listarPersona();
+        let personas = await this.personaService.listarPersona(persona);
         return { data: personas };
     }
 
@@ -33,12 +36,7 @@ export class PersonaController {
     @Delete(':id')
     async eliminarPersona(@Param() params) {
         let personaEliminada = await this.personaService.eliminarPersona(params.id);
-        if(personaEliminada) {
-            return { data : personaEliminada };
-        } else {
-            throw new HttpException('La persona no existe', HttpStatus.CONFLICT);
-        }
-        
+        return { data: personaEliminada };
     }
 
 }

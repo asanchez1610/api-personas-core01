@@ -7,3 +7,8 @@ export const PersonaSchema = new mongoose.Schema({
     email: String,
     numeroDocumento: String
 });
+
+export const UsuarioSchema = new mongoose.Schema({
+    userName: String,
+    password: String
+});

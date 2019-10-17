@@ -6,10 +6,21 @@ export const ctts = {
             persona: {
                 provide: 'PERSONA_MODEL',
                 entityName: 'Persona'
+            },
+            usuario: {
+                provide: 'USUARIO_MODEL',
+                entityName: 'Usuario'
             }
         }
     },
     jwt: {
-        secret: ''
+        secret: 'coreApiPersona$...'
+    },
+    keys: {
+        expiresIn: '600s',
+        hashLevelBcrypt: 12,
+        strategyJwtName: 'jwt',
+        strategyLocalName: 'local'
+        
     }
 }; 

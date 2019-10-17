@@ -1,4 +1,4 @@
-import { Injectable, Inject } from '@nestjs/common';
+import { Injectable, Inject, HttpException, HttpStatus } from '@nestjs/common';
 import { Model } from 'mongoose';
 import { ctts } from '../../util/constants';
 import { IPersona } from '../../models/interfaces/persona.interface';
@@ -7,8 +7,9 @@ import { PersonaDto } from '../../models/dtos/persona.dto';
 @Injectable()
 export class PersonaService {
 
-    constructor(@Inject(ctts.db.models.persona.provide)
-    private readonly personaModel: Model<IPersona>) { }
+    constructor(
+        @Inject(ctts.db.models.persona.provide)
+        private readonly personaModel: Model<IPersona>) { }
 
     async crearPersona(personaDto: PersonaDto) {
         const personaCreate = new this.personaModel(personaDto);
@@ -16,12 +17,12 @@ export class PersonaService {
     }
 
     async modificarPersona(id: string, personaDto: PersonaDto) {
-        const personaUpdate = await this.personaModel.updateOne({ _id: id }, personaDto);
+        await this.personaModel.updateOne({ _id: id }, personaDto);
         let persona = await this.obtenerPersonaPorId(id);
         return { data: persona };
     }
 
-    async listarPersona(): Promise<IPersona[]> {
+    async listarPersona(personaDto: PersonaDto): Promise<IPersona[]> {
         return await this.personaModel.find().exec();
     }
 
@@ -30,7 +31,12 @@ export class PersonaService {
     }
 
     async eliminarPersona(id: string) {
-        return await this.personaModel.findOneAndRemove({ _id: id });
+        const personaEliminada = await this.personaModel.findOneAndRemove({ _id: id });
+        if(personaEliminada) {
+            return personaEliminada;
+        } else {
+            throw new HttpException('La persona no existe', HttpStatus.CONFLICT);
+        }
     }
 
 }
