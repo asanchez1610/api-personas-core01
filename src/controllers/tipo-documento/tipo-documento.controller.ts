@@ -12,8 +12,8 @@ export class TipoDocumentoController {
     ) { }
 
     @Post()
-    async crearTipoDocumento(@Body() tipoDoc: TipoDocumentoDto) {
-        return await this.tipoDocumentoService.crearTipoDpcumento(tipoDoc);
+    async crearTipoDocumento(@Body() tipoDocumentoDto: TipoDocumentoDto) {
+        return await this.tipoDocumentoService.crearTipoDocumento(tipoDocumentoDto);
     }
 
     @Get()
@@ -24,7 +24,8 @@ export class TipoDocumentoController {
 
     @Delete(':id')
     async eliminarTipoDocumento(@Param() params) {
-        return { data: this.tipoDocumentoService.eliminarTipoDocumento(params.id) }
+        const tipoDocumentoEliminado = await this.tipoDocumentoService.eliminarTipoDocumento(params.id)
+        return { data: tipoDocumentoEliminado }
     }
 
 }

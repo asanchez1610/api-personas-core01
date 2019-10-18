@@ -12,8 +12,13 @@ export class TipoDocumentoService {
         private readonly tipoDocumentoModel: Model<ITipoDocumento>
     ) { }
 
-    async crearTipoDpcumento(tipoDocumentoDto: TipoDocumentoDto) {
-        const tipoDocumentoCreate = new this.tipoDocumentoModel(TipoDocumentoDto);
+    async crearTipoDocumento(tipoDocumentoDto: TipoDocumentoDto) {
+        tipoDocumentoDto.codigo = tipoDocumentoDto.codigo.toUpperCase();
+        const existeTipoDocumento = await this.obtenerTipoDocumentoPorCodigo(tipoDocumentoDto.codigo);
+        if(existeTipoDocumento) {
+            throw new HttpException(`El tipo de documento: ${tipoDocumentoDto.codigo}, ya existe`,HttpStatus.CONFLICT);
+        }
+        const tipoDocumentoCreate = new this.tipoDocumentoModel(tipoDocumentoDto);
         return await tipoDocumentoCreate.save();
     }
 
@@ -26,7 +31,7 @@ export class TipoDocumentoService {
     }
 
     async eliminarTipoDocumento(id: string) {
-        const tipoDocumentoEliminado = this.tipoDocumentoModel.findOneAndRemove({ _id: id });
+        const tipoDocumentoEliminado = await this.tipoDocumentoModel.findOneAndRemove({ _id: id });
         if (tipoDocumentoEliminado) {
             return tipoDocumentoEliminado;
         } else {

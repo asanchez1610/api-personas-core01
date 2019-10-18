@@ -16,7 +16,7 @@ function applySecurity(app) {
 }
 
 function applyOpenApi(app) {
-
+  const hostOpenAPi = 'open-api';
   const optionsPersona = new DocumentBuilder()
     .setTitle('Personas')
     .setDescription('API de servicios de personas')
@@ -27,7 +27,7 @@ function applyOpenApi(app) {
   const personaDocument = SwaggerModule.createDocument(app, optionsPersona, {
     include: [PersonaModule],
   });
-  SwaggerModule.setup('api/personas', app, personaDocument);
+  SwaggerModule.setup(`${hostOpenAPi}/personas`, app, personaDocument);
 
   const optionsUsuario = new DocumentBuilder()
     .setTitle('Usuarios')
@@ -39,7 +39,7 @@ function applyOpenApi(app) {
   const usuarioDocument = SwaggerModule.createDocument(app, optionsUsuario, {
     include: [UsuarioModule],
   });
-  SwaggerModule.setup('api/usuarios', app, usuarioDocument);
+  SwaggerModule.setup(`${hostOpenAPi}/usuarios`, app, usuarioDocument);
 
 }
 

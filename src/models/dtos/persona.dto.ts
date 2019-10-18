@@ -17,4 +17,7 @@ export class PersonaDto {
 
     @ApiModelProperty({ description: 'numero de documento de identidad' })
     numeroDocumento: string;
+
+    @ApiModelProperty({ description: 'Id Tipo Documento de la persona' })
+    tipoDocumento: string;
 }

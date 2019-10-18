@@ -12,6 +12,13 @@ export class PersonaService {
         private readonly personaModel: Model<IPersona>) { }
 
     async crearPersona(personaDto: PersonaDto) {
+        let filter = new PersonaDto();
+        filter.numeroDocumento = personaDto.numeroDocumento;
+        filter.tipoDocumento = personaDto.tipoDocumento;
+        const existePersona = await this.obtenerPersona(filter);
+        if (existePersona) {
+            throw new HttpException('Ya se encuenta registrada una persona con el número y tipo de documento ingresados', HttpStatus.CONFLICT);
+        }
         const personaCreate = new this.personaModel(personaDto);
         return await personaCreate.save();
     }
@@ -23,16 +30,28 @@ export class PersonaService {
     }
 
     async listarPersona(personaDto: PersonaDto): Promise<IPersona[]> {
-        return await this.personaModel.find().exec();
+        let filter = {};
+        if (personaDto) {
+            filter = { ...personaDto };
+        }
+        return await this.personaModel.find(filter).populate('tipoDocumento');
     }
 
     async obtenerPersonaPorId(id: string) {
         return await this.personaModel.findOne({ _id: id });
     }
 
+    async obtenerPersona(personaDto: PersonaDto) {
+        let filter = {};
+        if (personaDto) {
+            filter = { ...personaDto };
+        }
+        return await this.personaModel.findOne(filter);
+    }
+
     async eliminarPersona(id: string) {
         const personaEliminada = await this.personaModel.findOneAndRemove({ _id: id });
-        if(personaEliminada) {
+        if (personaEliminada) {
             return personaEliminada;
         } else {
             throw new HttpException('La persona no existe', HttpStatus.CONFLICT);
