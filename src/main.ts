@@ -4,6 +4,7 @@ import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import * as helmet from 'helmet';
 import { PersonaModule } from './modules/persona/persona.module';
 import { UsuarioModule } from './modules/usuario/usuario.module';
+import { LogService } from './log/log.service';
 
 function applySecurity(app) {
   app.use(helmet());
@@ -49,6 +50,8 @@ async function bootstrap() {
   applySecurity(app);
 
   applyOpenApi(app);
+
+  app.useLogger(app.get(LogService));
 
   await app.listen(3001);
 }
