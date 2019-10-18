@@ -10,6 +10,10 @@ export const ctts = {
             usuario: {
                 provide: 'USUARIO_MODEL',
                 entityName: 'Usuario'
+            },
+            tipoDocumento: {
+                provide: 'TDOC_MODEL',
+                entityName: 'TipoDocumento'
             }
         }
     },

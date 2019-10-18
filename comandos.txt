@@ -11,3 +11,7 @@ Para nest js Api
 	- npm install --save-dev @types/passport-local	
 	- npm install @nestjs/jwt passport-jwt
 	- npm install @types/passport-jwt --save-dev
+- Helmet
+	- npm i --save helmet
+- Open Api
+	- npm install --save @nestjs/swagger swagger-ui-express	
