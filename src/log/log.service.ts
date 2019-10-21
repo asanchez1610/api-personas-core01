@@ -28,7 +28,7 @@ export class LogService implements LoggerService {
         },
       },
       categories: {
-        default: { appenders: ['app', 'errors'], level: 'INFO'}
+        default: {  appenders: ['app', 'errors'], level: 'INFO'}
       },
     };
 
