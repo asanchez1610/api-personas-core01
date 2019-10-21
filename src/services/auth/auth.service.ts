@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { UsuarioService } from '../usuario/usuario.service';
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
@@ -13,9 +13,14 @@ export class AuthService {
 
   async validate(username: string, password: string): Promise<any> {
     const user = await this.usuarioService.obtenerUsuarioPorUserName(username);
+    if (!user) {
+      throw new HttpException(`El usuario: ${username} no existe.`, HttpStatus.CONFLICT);
+    }
     const passwordValid = await bcrypt.compare(password, user.password);
-    if (user && passwordValid) {
+    if (passwordValid) {
       return user;
+    } else {
+      throw new HttpException('La contraseña es incorrecta.', HttpStatus.CONFLICT);
     }
     return null;
   }

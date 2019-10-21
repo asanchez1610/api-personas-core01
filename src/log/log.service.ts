@@ -28,7 +28,7 @@ export class LogService implements LoggerService {
         },
       },
       categories: {
-        Log: { appenders: ['app', 'errors'], level: 'INFO'}
+        default: { appenders: ['app', 'errors'], level: 'INFO'}
       },
     };
 
@@ -36,15 +36,15 @@ export class LogService implements LoggerService {
       log4jsConfig.appenders.console = {
         type: 'console',
       };
-      log4jsConfig.categories.Log.appenders.push('console');
-      log4jsConfig.categories.Log.level = 'INFO';
+      log4jsConfig.categories.default.appenders.push('console');
+      log4jsConfig.categories.default.level = 'INFO';
     }
 
     configure(log4jsConfig);
   }
 
   log(message: string) {
-      this.log4jsLogger.log(message);
+      this.log4jsLogger.info(message);
   }
   error(message: string, trace: string) {
     this.log4jsLogger.error(message, trace);

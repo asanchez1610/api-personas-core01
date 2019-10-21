@@ -45,13 +45,15 @@ function applyOpenApi(app) {
 }
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create(AppModule, {
+    logger: new LogService(),
+  });
 
   applySecurity(app);
 
   applyOpenApi(app);
 
-  app.useLogger(app.get(LogService));
+  //app.useLogger(app.get(LogService));
 
   await app.listen(3001);
 }
